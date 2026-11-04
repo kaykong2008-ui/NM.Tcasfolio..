@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NM.TCASFOLIO - ระบบสร้างแฟ้มสะสมผลงาน โรงเรียนนาหมื่นพิทยาคม</title>
+  <title>NM.TCASFOLIO - ระบบสร้างแฟ้มสะสมผลงาน โรงเรียนนาหมื่นพิทยาคม (TCAS Standard)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Kanit', sans-serif; background-color: #f1f5f9; color: #1e293b; }
+    body { font-family: 'Kanit', sans-serif; background-color: #f8fafc; color: #1e293b; }
     @page { size: A4 portrait; margin: 0; }
     @media print {
       body { background: white !important; color: black !important; padding: 0 !important; }
@@ -37,24 +37,27 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- Header -->
-  <header class="bg-[#0a3654] text-white shadow-lg sticky top-0 z-40 no-print">
+  <!-- Header สไตล์ ทปอ. & โรงเรียนนาหมื่นพิทยาคม -->
+  <header class="bg-[#0b2545] text-white shadow-md sticky top-0 z-40 no-print border-b-4 border-[#134074]">
     <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
       <div class="flex items-center gap-3">
-        <svg class="w-10 h-10" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="46" fill="none" stroke="#60a5fa" stroke-width="4"/>
-          <circle cx="50" cy="50" r="40" fill="none" stroke="#eab308" stroke-width="2"/>
-          <circle cx="50" cy="50" r="14" fill="#d97706"/>
-          <circle cx="50" cy="50" r="6" fill="#ffffff"/>
-        </svg>
+        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow">
+          <svg class="w-8 h-8" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="46" fill="none" stroke="#134074" stroke-width="6"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#d97706" stroke-width="3"/>
+            <circle cx="50" cy="50" r="12" fill="#134074"/>
+          </svg>
+        </div>
         <div>
           <h1 class="font-bold text-lg leading-tight tracking-wide text-amber-400">NM.TCASFOLIO</h1>
-          <p class="text-xs text-slate-300">โรงเรียนนาหมื่นพิทยาคม • ระบบ TCAS Portfolio</p>
+          <p class="text-xs text-slate-300">ระบบจำลอง TCAS Portfolio • โรงเรียนนาหมื่นพิทยาคม</p>
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <span id="saveStatus" class="text-xs bg-emerald-800 text-emerald-200 px-2.5 py-1 rounded-full">พร้อมใช้งาน</span>
-        <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-medium text-sm px-3.5 py-1.5 rounded-lg transition flex items-center gap-1 shadow">
+        <button onclick="fillDemoData()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs px-3 py-2 rounded-lg transition shadow">
+          ⚡ กรอกข้อมูลตัวอย่างอัตโนมัติ
+        </button>
+        <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-medium text-sm px-4 py-2 rounded-lg transition flex items-center gap-1 shadow">
           <span>🖨️ พิมพ์ / บันทึก PDF</span>
         </button>
       </div>
@@ -64,97 +67,75 @@
   <!-- Main Content -->
   <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
     
-    <!-- Sidebar -->
+    <!-- Sidebar เมนูหลัก -->
     <aside class="lg:col-span-3 space-y-2 no-print">
       <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
         <div class="flex items-center gap-3 pb-3 border-b border-slate-100">
-          <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-xl font-bold text-[#0a3654]" id="userAvatar">NM</div>
+          <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-xl font-bold text-[#0b2545]" id="userAvatar">NM</div>
           <div>
             <h3 class="font-semibold text-slate-800 text-sm" id="navStudentName">นักเรียน นาหมื่น</h3>
-            <p class="text-xs text-slate-500" id="navStudentId">โรงเรียนนาหมื่นพิทยาคม</p>
+            <p class="text-xs text-slate-500">โรงเรียนนาหมื่นพิทยาคม</p>
           </div>
         </div>
         <nav class="mt-3 space-y-1">
-          <button onclick="switchTab('profile')" id="btn-profile" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium bg-slate-100 text-[#0a3654]">👤 ข้อมูลส่วนตัว & เกรด</button>
-          <button onclick="switchTab('sop')" id="btn-sop" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 text-slate-700">✍️ SOP & เรียงความ</button>
-          <button onclick="switchTab('activities')" id="btn-activities" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 text-slate-700">🏆 กิจกรรม & ผลงาน</button>
-          <button onclick="switchTab('preview')" id="btn-preview" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200">📄 ดูตัวอย่าง A4 / พิมพ์</button>
+          <button onclick="switchTab('profile')" id="tab-profile" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium bg-slate-100 text-[#0b2545]">👤 1. ข้อมูลส่วนตัว & เกรด</button>
+          <button onclick="switchTab('sop')" id="tab-sop" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 text-slate-700">✍️ 2. SOP & เป้าหมาย</button>
+          <button onclick="switchTab('activities')" id="tab-activities" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 text-slate-700">🏆 3. กิจกรรม & ผลงาน</button>
+          <button onclick="switchTab('preview')" id="tab-preview" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200">📄 4. พรีวิว A4 & พิมพ์เล่ม</button>
         </nav>
       </div>
     </aside>
 
-    <!-- Workspace -->
-    <section class="lg:col-span-9">
+    <!-- Workspace พื้นที่กรอกข้อมูล -->
+    <section class="lg:col-span-9 space-y-6">
       <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 no-print">
-        <h2 class="text-xl font-bold text-[#0a3654] mb-2">ระบบกรอกข้อมูลแฟ้มสะสมผลงาน</h2>
-        <p class="text-sm text-slate-600 mb-6">พิมพ์ข้อมูลของคุณลงในช่องด้านล่าง ระบบจะแสดงผลและอัปเดตลงหน้าพอร์ตอัตโนมัติ</p>
-        
         <div id="formContent" class="space-y-4">
-          <!-- ฟอร์มข้อมูลส่วนตัว -->
-          <div class="space-y-4">
-            <h3 class="font-bold text-slate-800 text-lg border-b pb-2">ข้อมูลส่วนตัว & ผลการเรียน (GPAX)</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อ-นามสกุล</label>
-                <input type="text" id="inputName" value="นายสมชาย ใจดี" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateData()">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">แผนการเรียน</label>
-                <input type="text" id="inputPlan" value="วิทยาศาสตร์ - คณิตศาสตร์" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateData()">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">เกรดเฉลี่ยสะสม (GPAX)</label>
-                <input type="text" id="inputGpax" value="3.85" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateData()">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">มหาวิทยาลัย / คณะที่สมัคร</label>
-                <input type="text" id="inputTarget" value="คณะวิศวกรรมศาสตร์ มหาวิทยาลัย..." class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateData()">
-              </div>
-            </div>
-          </div>
+          <!-- ฟอร์มถูกโหลดผ่าน Script ด้านล่าง -->
         </div>
       </div>
 
-      <!-- Live A4 Preview Section -->
-      <div id="previewSection" class="mt-6 print-area">
-        <div class="a4-preview p-12 flex flex-col justify-between border border-slate-300">
+      <!-- Live A4 Preview พรีวิวเล่มพอร์ตขนาด A4 จริง -->
+      <div id="previewSection" class="print-area">
+        <div class="a4-page a4-preview p-12 flex flex-col justify-between border border-slate-300 rounded-lg">
           <div>
             <div class="text-center space-y-4 mt-8">
-              <div class="w-24 h-24 mx-auto bg-[#0a3654] rounded-full flex items-center justify-center text-amber-400 font-bold text-xl border-4 border-amber-400 shadow">
+              <div class="w-24 h-24 mx-auto bg-[#0b2545] rounded-full flex items-center justify-center text-amber-400 font-bold text-xl border-4 border-amber-400 shadow">
                 NM
               </div>
               <div>
-                <h1 class="text-3xl font-bold text-[#0a3654] tracking-wider">PORTFOLIO</h1>
+                <h1 class="text-3xl font-bold text-[#0b2545] tracking-wider">PORTFOLIO</h1>
                 <p class="text-sm text-slate-500 mt-1">แฟ้มสะสมผลงานเพื่อการคัดเลือกเข้าศึกษาต่อระดับมหาวิทยาลัย (TCAS)</p>
+                <p class="text-xs font-semibold text-amber-600 mt-1">โรงเรียนนาหมื่นพิทยาคม จังหวัดน่าน</p>
               </div>
             </div>
 
-            <div class="mt-12 max-w-lg mx-auto space-y-3 bg-slate-50 p-6 rounded-xl border border-slate-200 text-sm">
+            <div class="mt-10 max-w-lg mx-auto space-y-3 bg-slate-50 p-6 rounded-xl border border-slate-200 text-sm">
               <div class="flex justify-between border-b pb-2">
                 <span class="text-slate-500">ชื่อ-นามสกุล:</span>
                 <span class="font-semibold text-slate-800" id="prevName">นายสมชาย ใจดี</span>
-              </div>
-              <div class="flex justify-between border-b pb-2">
-                <span class="text-slate-500">โรงเรียน:</span>
-                <span class="font-semibold text-slate-800">โรงเรียนนาหมื่นพิทยาคม</span>
               </div>
               <div class="flex justify-between border-b pb-2">
                 <span class="text-slate-500">แผนการเรียน:</span>
                 <span class="font-semibold text-slate-800" id="prevPlan">วิทยาศาสตร์ - คณิตศาสตร์</span>
               </div>
               <div class="flex justify-between border-b pb-2">
-                <span class="text-slate-500">เป้าหมาย:</span>
-                <span class="font-semibold text-slate-800" id="prevTarget">คณะวิศวกรรมศาสตร์ มหาวิทยาลัย...</span>
+                <span class="text-slate-500">คณะ/มหาวิทยาลัยเป้าหมาย:</span>
+                <span class="font-semibold text-slate-800" id="prevTarget">คณะวิศวกรรมศาสตร์</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-slate-500">เกรดเฉลี่ยสะสม (GPAX):</span>
                 <span class="font-bold text-amber-600" id="prevGpax">3.85</span>
               </div>
             </div>
+
+            <div class="mt-8 px-6">
+              <h4 class="font-bold text-slate-700 text-sm border-b pb-1 mb-2">บทสรุปผู้บริหาร / Statement of Purpose (SOP)</h4>
+              <p class="text-xs text-slate-600 leading-relaxed" id="prevSop">ข้าพเจ้ามีความมุ่งมั่นและตั้งใจศึกษาต่อในระดับอุดมศึกษา...</p>
+            </div>
           </div>
 
           <div class="text-center text-xs text-slate-400 border-t pt-4">
-            โรงเรียนนาหมื่นพิทยาคม • NM.TCASFOLIO Standard A4 Document
+            โรงเรียนนาหมื่นพิทยาคม • NM.TCASFOLIO Standard A4 Document (TCAS System)
           </div>
         </div>
       </div>
@@ -162,69 +143,100 @@
   </main>
 
   <script>
-    function updateData() {
-      const name = document.getElementById('inputName').value;
-      const plan = document.getElementById('inputPlan').value;
-      const gpax = document.getElementById('inputGpax').value;
-      const target = document.getElementById('inputTarget').value;
-
-      document.getElementById('prevName').innerText = name;
-      document.getElementById('prevPlan').innerText = plan;
-      document.getElementById('prevGpax').innerText = gpax;
-      document.getElementById('prevTarget').innerText = target;
-      document.getElementById('navStudentName').innerText = name;
-    }
+    let currentData = {
+      name: "นายสมชาย ใจดี",
+      plan: "วิทยาศาสตร์ - คณิตศาสตร์",
+      gpax: "3.85",
+      target: "คณะวิศวกรรมศาสตร์",
+      sop: "ข้าพเจ้ามีความมุ่งมั่นและตั้งใจศึกษาต่อในระดับอุดมศึกษา เพื่อพัฒนาทักษะด้านเทคโนโลยีและนวัตกรรม พร้อมนำความรู้กลับมาพัฒนาชุมชนและสังคมต่อไป",
+      activities: "เข้าร่วมการแข่งขันโครงงานวิทยาศาสตร์ระดับจังหวัด และได้รับรางวัลเกียรติบัตรเหรียญทอง"
+    };
 
     function switchTab(tab) {
+      document.querySelectorAll('aside nav button').forEach(b => {
+        b.className = "w-full text-left px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 text-slate-700";
+      });
+      document.getElementById('tab-' + tab).className = "w-full text-left px-3 py-2 rounded-lg text-sm font-medium bg-slate-100 text-[#0b2545]";
+
       const form = document.getElementById('formContent');
       if(tab === 'profile') {
         form.innerHTML = `
-          <div class="space-y-4">
-            <h3 class="font-bold text-slate-800 text-lg border-b pb-2">ข้อมูลส่วนตัว & ผลการเรียน (GPAX)</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อ-นามสกุล</label>
-                <input type="text" id="inputName" value="${document.getElementById('prevName')?.textContent || ''}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateData()">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">แผนการเรียน</label>
-                <input type="text" id="inputPlan" value="${document.getElementById('prevPlan')?.textContent || ''}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateData()">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">เกรดเฉลี่ยสะสม (GPAX)</label>
-                <input type="text" id="inputGpax" value="${document.getElementById('prevGpax')?.textContent || ''}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateData()">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">มหาวิทยาลัย / คณะที่สมัคร</label>
-                <input type="text" id="inputTarget" value="${document.getElementById('prevTarget')?.textContent || ''}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="updateData()">
-              </div>
+          <h3 class="font-bold text-[#0b2545] text-lg border-b pb-2">ข้อมูลส่วนตัว & ผลการเรียน (GPAX)</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อ-นามสกุล</label>
+              <input type="text" id="inputName" value="${currentData.name}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">แผนการเรียน</label>
+              <input type="text" id="inputPlan" value="${currentData.plan}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">เกรดเฉลี่ยสะสม (GPAX)</label>
+              <input type="text" id="inputGpax" value="${currentData.gpax}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">คณะ / มหาวิทยาลัยเป้าหมาย</label>
+              <input type="text" id="inputTarget" value="${currentData.target}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">
             </div>
           </div>
         `;
       } else if(tab === 'sop') {
         form.innerHTML = `
-          <div class="space-y-4">
-            <h3 class="font-bold text-slate-800 text-lg border-b pb-2">Statement of Purpose (SOP) / เรียงความแนะนำตัว</h3>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">เขียนเรียงความเหตุผลในการเข้าศึกษาต่อ</label>
-              <textarea rows="6" id="inputSop" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="พิมพ์เรียงความของคุณที่นี่...">ข้าพเจ้ามีความสนใจเป็นอย่างยิ่งที่จะศึกษาต่อในคณะ...</textarea>
-            </div>
+          <h3 class="font-bold text-[#0b2545] text-lg border-b pb-2">Statement of Purpose (SOP) / เรียงความ</h3>
+          <div class="mt-3">
+            <label class="block text-xs font-semibold text-slate-600 mb-1">เหตุผลและความมุ่งมั่นในการศึกษาต่อ</label>
+            <textarea rows="5" id="inputSop" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">${currentData.sop}</textarea>
           </div>
         `;
       } else if(tab === 'activities') {
         form.innerHTML = `
-          <div class="space-y-4">
-            <h3 class="font-bold text-slate-800 text-lg border-b pb-2">บันทึกกิจกรรมและผลงาน</h3>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อกิจกรรม / ผลงานเด่น</label>
-              <input type="text" id="inputAct" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="เช่น เข้าร่วมการแข่งขันคณิตศาสตร์ระดับจังหวัด">
-            </div>
+          <h3 class="font-bold text-[#0b2545] text-lg border-b pb-2">บันทึกกิจกรรมและผลงานเด่น</h3>
+          <div class="mt-3">
+            <label class="block text-xs font-semibold text-slate-600 mb-1">รายละเอียดกิจกรรม</label>
+            <textarea rows="4" id="inputAct" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">${currentData.activities}</textarea>
           </div>
         `;
       } else if(tab === 'preview') {
-        form.innerHTML = `<div class="p-4 bg-amber-50 text-amber-900 rounded-lg text-sm">เลื่อนลงด้านล่างเพื่อดูหน้าพอร์ตโฟลิโอขนาด A4 และกดปุ่มพิมพ์เอกสารได้เลยครับ</div>`;
+        form.innerHTML = `
+          <h3 class="font-bold text-[#0b2545] text-lg border-b pb-2">พร้อมพิมพ์และส่งออกเอกสาร</h3>
+          <p class="text-sm text-slate-600 mt-2">ข้อมูลทั้งหมดถูกซิงค์เข้าสู่เล่มพอร์ตขนาด A4 เรียบร้อยแล้ว สามารถกดปุ่ม **พิมพ์ / บันทึก PDF** ด้านบนขวาเพื่อบันทึกไฟล์ได้ทันทีครับ</p>
+        `;
       }
     }
+
+    function syncData() {
+      if(document.getElementById('inputName')) currentData.name = document.getElementById('inputName').value;
+      if(document.getElementById('inputPlan')) currentData.plan = document.getElementById('inputPlan').value;
+      if(document.getElementById('inputGpax')) currentData.gpax = document.getElementById('inputGpax').value;
+      if(document.getElementById('inputTarget')) currentData.target = document.getElementById('inputTarget').value;
+      if(document.getElementById('inputSop')) currentData.sop = document.getElementById('inputSop').value;
+      if(document.getElementById('inputAct')) currentData.activities = document.getElementById('inputAct').value;
+
+      document.getElementById('prevName').innerText = currentData.name;
+      document.getElementById('prevPlan').innerText = currentData.plan;
+      document.getElementById('prevGpax').innerText = currentData.gpax;
+      document.getElementById('prevTarget').innerText = currentData.target;
+      document.getElementById('prevSop').innerText = currentData.sop;
+      document.getElementById('navStudentName').innerText = currentData.name;
+    }
+
+    function fillDemoData() {
+      currentData = {
+        name: "นายปิยะพงษ์ มั่นคง",
+        plan: "วิทยาศาสตร์ - คณิตศาสตร์",
+        gpax: "3.92",
+        target: "คณะวิศวกรรมคอมพิวเตอร์",
+        sop: "มีความหลงใหลในการพัฒนาซอฟต์แวร์และปัญญาประดิษฐ์ เคยเข้าร่วมแข่งขันเขียนโปรแกรมระดับภาค และต้องการศึกษาต่อเพื่อเป็นวิศวกรซอฟต์แวร์มืออาชีพ",
+        activities: "ชนะเลิศการแข่งขันโครงงานคอมพิวเตอร์ระดับเขตพื้นที่การศึกษา และเป็นประธานชมรมคอมพิวเตอร์"
+      };
+      switchTab('profile');
+      syncData();
+      alert("กรอกข้อมูลตัวอย่างแบบฟอร์ม TCAS เรียบร้อยแล้ว!");
+    }
+
+    // เริ่มต้นแสดงหน้า Profile
+    switchTab('profile');
   </script>
 </body>
 </html>
