@@ -55,10 +55,10 @@
       </div>
       <div class="flex items-center gap-2">
         <button onclick="fillDemoData()" class="bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs px-3 py-2 rounded-lg transition shadow">
-          ⚡ กรอกข้อมูลตัวอย่างอัตโนมัติ
+          ⚡ กรอกข้อมูลตัวอย่าง
         </button>
         <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-medium text-sm px-4 py-2 rounded-lg transition flex items-center gap-1 shadow">
-          <span>🖨️ พิมพ์ / บันทึก PDF</span>
+          <span>🖨️ พิมพ์ / PDF</span>
         </button>
       </div>
     </div>
@@ -78,9 +78,9 @@
           </div>
         </div>
         <nav class="mt-3 space-y-1">
-          <button onclick="switchTab('profile')" id="tab-profile" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium bg-slate-100 text-[#0b2545]">👤 1. ข้อมูลส่วนตัว & เกรด</button>
+          <button onclick="switchTab('profile')" id="tab-profile" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium bg-slate-100 text-[#0b2545]">👤 1. ข้อมูลส่วนตัว & ปก</button>
           <button onclick="switchTab('sop')" id="tab-sop" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 text-slate-700">✍️ 2. SOP & เป้าหมาย</button>
-          <button onclick="switchTab('activities')" id="tab-activities" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 text-slate-700">🏆 3. กิจกรรม & ผลงาน</button>
+          <button onclick="switchTab('activities')" id="tab-activities" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 text-slate-700">🏆 3. เพิ่มกิจกรรม & รูปภาพ</button>
           <button onclick="switchTab('preview')" id="tab-preview" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200">📄 4. พรีวิว A4 & พิมพ์เล่ม</button>
         </nav>
       </div>
@@ -90,54 +90,70 @@
     <section class="lg:col-span-9 space-y-6">
       <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 no-print">
         <div id="formContent" class="space-y-4">
-          <!-- ฟอร์มถูกโหลดผ่าน Script ด้านล่าง -->
+          <!-- ฟอร์มถูกโหลดผ่าน Script -->
         </div>
       </div>
 
       <!-- Live A4 Preview พรีวิวเล่มพอร์ตขนาด A4 จริง -->
-      <div id="previewSection" class="print-area">
+      <div id="previewSection" class="space-y-6 print-area">
+        
+        <!-- หน้าที่ 1: ปกหน้า -->
         <div class="a4-page a4-preview p-12 flex flex-col justify-between border border-slate-300 rounded-lg">
-          <div>
-            <div class="text-center space-y-4 mt-8">
-              <div class="w-24 h-24 mx-auto bg-[#0b2545] rounded-full flex items-center justify-center text-amber-400 font-bold text-xl border-4 border-amber-400 shadow">
+          <div class="text-center">
+            <div id="prevCoverImgContainer" class="mb-6">
+              <div class="w-32 h-32 mx-auto bg-[#0b2545] rounded-full overflow-hidden flex items-center justify-center text-amber-400 font-bold text-2xl border-4 border-amber-400 shadow" id="coverCircle">
                 NM
               </div>
-              <div>
-                <h1 class="text-3xl font-bold text-[#0b2545] tracking-wider">PORTFOLIO</h1>
-                <p class="text-sm text-slate-500 mt-1">แฟ้มสะสมผลงานเพื่อการคัดเลือกเข้าศึกษาต่อระดับมหาวิทยาลัย (TCAS)</p>
-                <p class="text-xs font-semibold text-amber-600 mt-1">โรงเรียนนาหมื่นพิทยาคม จังหวัดน่าน</p>
-              </div>
             </div>
+            <h1 class="text-3xl font-bold text-[#0b2545] tracking-wider mt-4">PORTFOLIO</h1>
+            <p class="text-sm text-slate-500 mt-1">แฟ้มสะสมผลงานเพื่อการคัดเลือกเข้าศึกษาต่อระดับมหาวิทยาลัย (TCAS)</p>
+            <p class="text-xs font-semibold text-amber-600 mt-2">โรงเรียนนาหมื่นพิทยาคม จังหวัดน่าน</p>
+          </div>
 
-            <div class="mt-10 max-w-lg mx-auto space-y-3 bg-slate-50 p-6 rounded-xl border border-slate-200 text-sm">
-              <div class="flex justify-between border-b pb-2">
-                <span class="text-slate-500">ชื่อ-นามสกุล:</span>
-                <span class="font-semibold text-slate-800" id="prevName">นายสมชาย ใจดี</span>
-              </div>
-              <div class="flex justify-between border-b pb-2">
-                <span class="text-slate-500">แผนการเรียน:</span>
-                <span class="font-semibold text-slate-800" id="prevPlan">วิทยาศาสตร์ - คณิตศาสตร์</span>
-              </div>
-              <div class="flex justify-between border-b pb-2">
-                <span class="text-slate-500">คณะ/มหาวิทยาลัยเป้าหมาย:</span>
-                <span class="font-semibold text-slate-800" id="prevTarget">คณะวิศวกรรมศาสตร์</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-slate-500">เกรดเฉลี่ยสะสม (GPAX):</span>
-                <span class="font-bold text-amber-600" id="prevGpax">3.85</span>
-              </div>
+          <div class="max-w-md mx-auto w-full space-y-2 bg-slate-50 p-6 rounded-xl border border-slate-200 text-sm">
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-slate-500">ชื่อ-นามสกุล:</span>
+              <span class="font-semibold text-slate-800" id="prevName">นายสมชาย ใจดี</span>
             </div>
-
-            <div class="mt-8 px-6">
-              <h4 class="font-bold text-slate-700 text-sm border-b pb-1 mb-2">บทสรุปผู้บริหาร / Statement of Purpose (SOP)</h4>
-              <p class="text-xs text-slate-600 leading-relaxed" id="prevSop">ข้าพเจ้ามีความมุ่งมั่นและตั้งใจศึกษาต่อในระดับอุดมศึกษา...</p>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-slate-500">แผนการเรียน:</span>
+              <span class="font-semibold text-slate-800" id="prevPlan">วิทยาศาสตร์ - คณิตศาสตร์</span>
+            </div>
+            <div class="flex justify-between border-b pb-2">
+              <span class="text-slate-500">เป้าหมาย:</span>
+              <span class="font-semibold text-slate-800" id="prevTarget">คณะวิศวกรรมศาสตร์</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-500">เกรดเฉลี่ย (GPAX):</span>
+              <span class="font-bold text-amber-600" id="prevGpax">3.85</span>
             </div>
           </div>
 
           <div class="text-center text-xs text-slate-400 border-t pt-4">
-            โรงเรียนนาหมื่นพิทยาคม • NM.TCASFOLIO Standard A4 Document (TCAS System)
+            โรงเรียนนาหมื่นพิทยาคม • NM.TCASFOLIO Standard A4 Document
           </div>
         </div>
+
+        <!-- หน้าที่ 2: SOP & ประวัติการศึกษา -->
+        <div class="a4-page a4-preview p-12 flex flex-col justify-between border border-slate-300 rounded-lg">
+          <div>
+            <h2 class="text-xl font-bold text-[#0b2545] border-b-2 border-[#0b2545] pb-2 mb-4">Statement of Purpose (SOP)</h2>
+            <p class="text-xs text-slate-700 leading-relaxed whitespace-pre-line" id="prevSop">ข้าพเจ้ามีความมุ่งมั่น...</p>
+          </div>
+          <div class="text-center text-xs text-slate-400 border-t pt-4">หน้า 2 • NM.TCASFOLIO</div>
+        </div>
+
+        <!-- หน้าที่ 3: กิจกรรมและผลงาน (รองรับหลายรายการ) -->
+        <div class="a4-page a4-preview p-12 flex flex-col justify-between border border-slate-300 rounded-lg">
+          <div>
+            <h2 class="text-xl font-bold text-[#0b2545] border-b-2 border-[#0b2545] pb-2 mb-4">กิจกรรมและผลงานเด่น (Activities & Certificates)</h2>
+            <div id="prevActivitiesList" class="space-y-4">
+              <!-- รายการกิจกรรมจะถูกเรนเดอร์มาที่นี่อัตโนมัติ -->
+            </div>
+          </div>
+          <div class="text-center text-xs text-slate-400 border-t pt-4">หน้า 3 • NM.TCASFOLIO</div>
+        </div>
+
       </div>
     </section>
   </main>
@@ -148,8 +164,12 @@
       plan: "วิทยาศาสตร์ - คณิตศาสตร์",
       gpax: "3.85",
       target: "คณะวิศวกรรมศาสตร์",
+      coverImg: "",
       sop: "ข้าพเจ้ามีความมุ่งมั่นและตั้งใจศึกษาต่อในระดับอุดมศึกษา เพื่อพัฒนาทักษะด้านเทคโนโลยีและนวัตกรรม พร้อมนำความรู้กลับมาพัฒนาชุมชนและสังคมต่อไป",
-      activities: "เข้าร่วมการแข่งขันโครงงานวิทยาศาสตร์ระดับจังหวัด และได้รับรางวัลเกียรติบัตรเหรียญทอง"
+      activities: [
+        { title: "ชนะเลิศการแข่งขันโครงงานวิทยาศาสตร์", desc: "ได้รับรางวัลเกียรติบัตรเหรียญทอง ระดับเขตพื้นที่การศึกษา", img: "" },
+        { title: "ประธานชมรมคอมพิวเตอร์และเทคโนโลยี", desc: "นำทีมเพื่อนนักเรียนจัดค่ายอบรม coding ให้กับน้องๆ โรงเรียนในชุมชน", img: "" }
+      ]
     };
 
     function switchTab(tab) {
@@ -161,23 +181,27 @@
       const form = document.getElementById('formContent');
       if(tab === 'profile') {
         form.innerHTML = `
-          <h3 class="font-bold text-[#0b2545] text-lg border-b pb-2">ข้อมูลส่วนตัว & ผลการเรียน (GPAX)</h3>
+          <h3 class="font-bold text-[#0b2545] text-lg border-b pb-2">ข้อมูลส่วนตัว & รูปหน้าปก</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
             <div>
               <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อ-นามสกุล</label>
-              <input type="text" id="inputName" value="${currentData.name}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">
+              <input type="text" id="inputName" value="${currentData.name}" class="w-full p-2.5 text-sm border rounded-lg outline-none" oninput="syncData()">
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-600 mb-1">แผนการเรียน</label>
-              <input type="text" id="inputPlan" value="${currentData.plan}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">
+              <input type="text" id="inputPlan" value="${currentData.plan}" class="w-full p-2.5 text-sm border rounded-lg outline-none" oninput="syncData()">
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-600 mb-1">เกรดเฉลี่ยสะสม (GPAX)</label>
-              <input type="text" id="inputGpax" value="${currentData.gpax}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">
+              <input type="text" id="inputGpax" value="${currentData.gpax}" class="w-full p-2.5 text-sm border rounded-lg outline-none" oninput="syncData()">
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">คณะ / มหาวิทยาลัยเป้าหมาย</label>
-              <input type="text" id="inputTarget" value="${currentData.target}" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">
+              <label class="block text-xs font-semibold text-slate-600 mb-1">คณะ/มหาวิทยาลัยเป้าหมาย</label>
+              <input type="text" id="inputTarget" value="${currentData.target}" class="w-full p-2.5 text-sm border rounded-lg outline-none" oninput="syncData()">
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold text-slate-600 mb-1">อัปโหลดรูปหน้าปก / รูปประจำตัว</label>
+              <input type="file" accept="image/*" class="w-full p-2 text-sm border rounded-lg bg-slate-50" onchange="handleCoverImage(event)">
             </div>
           </div>
         `;
@@ -186,22 +210,44 @@
           <h3 class="font-bold text-[#0b2545] text-lg border-b pb-2">Statement of Purpose (SOP) / เรียงความ</h3>
           <div class="mt-3">
             <label class="block text-xs font-semibold text-slate-600 mb-1">เหตุผลและความมุ่งมั่นในการศึกษาต่อ</label>
-            <textarea rows="5" id="inputSop" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">${currentData.sop}</textarea>
+            <textarea rows="6" id="inputSop" class="w-full p-2.5 text-sm border rounded-lg outline-none" oninput="syncData()">${currentData.sop}</textarea>
           </div>
         `;
       } else if(tab === 'activities') {
-        form.innerHTML = `
-          <h3 class="font-bold text-[#0b2545] text-lg border-b pb-2">บันทึกกิจกรรมและผลงานเด่น</h3>
-          <div class="mt-3">
-            <label class="block text-xs font-semibold text-slate-600 mb-1">รายละเอียดกิจกรรม</label>
-            <textarea rows="4" id="inputAct" class="w-full p-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" oninput="syncData()">${currentData.activities}</textarea>
+        let actHtml = `
+          <div class="flex justify-between items-center border-b pb-2">
+            <h3 class="font-bold text-[#0b2545] text-lg">จัดการกิจกรรม & เพิ่มรูปภาพ (เพิ่มได้หลายรายการ)</h3>
+            <button onclick="addActivityItem()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 rounded-lg shadow">+ เพิ่มกิจกรรม</button>
           </div>
+          <div id="activityInputsContainer" class="space-y-4 mt-3">
         `;
+        
+        currentData.activities.forEach((act, idx) => {
+          actHtml += `
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3 relative">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold text-slate-700">กิจกรรมที่ #${idx + 1}</span>
+                <button onclick="removeActivityItem(${idx})" class="text-red-500 hover:text-red-700 text-xs font-semibold">ลบรายการ</button>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อกิจกรรม</label>
+                <input type="text" value="${act.title}" oninput="updateActivityField(${idx}, 'title', this.value)" class="w-full p-2 text-sm border rounded-lg bg-white">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">รายละเอียด</label>
+                <textarea rows="2" oninput="updateActivityField(${idx}, 'desc', this.value)" class="w-full p-2 text-sm border rounded-lg bg-white">${act.desc}</textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">อัปโหลดรูปภาพกิจกรรม / เกียรติบัตร</label>
+                <input type="file" accept="image/*" class="w-full p-1.5 text-xs border rounded-lg bg-white" onchange="handleActivityImage(event, ${idx})">
+              </div>
+            </div>
+          `;
+        });
+        actHtml += `</div>`;
+        form.innerHTML = actHtml;
       } else if(tab === 'preview') {
-        form.innerHTML = `
-          <h3 class="font-bold text-[#0b2545] text-lg border-b pb-2">พร้อมพิมพ์และส่งออกเอกสาร</h3>
-          <p class="text-sm text-slate-600 mt-2">ข้อมูลทั้งหมดถูกซิงค์เข้าสู่เล่มพอร์ตขนาด A4 เรียบร้อยแล้ว สามารถกดปุ่ม **พิมพ์ / บันทึก PDF** ด้านบนขวาเพื่อบันทึกไฟล์ได้ทันทีครับ</p>
-        `;
+        form.innerHTML = `<p class="text-sm text-slate-600">ตรวจสอบความเรียบร้อยของหน้าพอร์ต A4 ด้านล่าง แล้วกดปุ่ม <b>พิมพ์ / PDF</b> มุมบนขวาเพื่อบันทึกไฟล์ได้ทันทีครับ</p>`;
       }
     }
 
@@ -211,7 +257,6 @@
       if(document.getElementById('inputGpax')) currentData.gpax = document.getElementById('inputGpax').value;
       if(document.getElementById('inputTarget')) currentData.target = document.getElementById('inputTarget').value;
       if(document.getElementById('inputSop')) currentData.sop = document.getElementById('inputSop').value;
-      if(document.getElementById('inputAct')) currentData.activities = document.getElementById('inputAct').value;
 
       document.getElementById('prevName').innerText = currentData.name;
       document.getElementById('prevPlan').innerText = currentData.plan;
@@ -219,6 +264,73 @@
       document.getElementById('prevTarget').innerText = currentData.target;
       document.getElementById('prevSop').innerText = currentData.sop;
       document.getElementById('navStudentName').innerText = currentData.name;
+
+      renderActivitiesPreview();
+    }
+
+    function addActivityItem() {
+      currentData.activities.push({ title: "กิจกรรมใหม่", desc: "รายละเอียดกิจกรรม...", img: "" });
+      switchTab('activities');
+      syncData();
+    }
+
+    function removeActivityItem(idx) {
+      currentData.activities.splice(idx, 1);
+      switchTab('activities');
+      syncData();
+    }
+
+    function updateActivityField(idx, field, value) {
+      currentData.activities[idx][field] = value;
+      syncData();
+    }
+
+    function handleCoverImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          currentData.coverImg = e.target.result;
+          document.getElementById('prevCoverImgContainer').innerHTML = `
+            <img src="${currentData.coverImg}" class="w-32 h-32 mx-auto rounded-full object-cover border-4 border-amber-400 shadow">
+          `;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handleActivityImage(event, idx) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          currentData.activities[idx].img = e.target.result;
+          syncData();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function renderActivitiesPreview() {
+      const container = document.getElementById('prevActivitiesList');
+      if (!container) return;
+      if (currentData.activities.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">ยังไม่มีรายการกิจกรรม</p>`;
+        return;
+      }
+      let html = "";
+      currentData.activities.forEach((act, idx) => {
+        html += `
+          <div class="flex gap-4 items-start bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
+            ${act.img ? `<img src="${act.img}" class="w-20 h-20 object-cover rounded-lg border shadow-sm flex-shrink-0">` : `<div class="w-20 h-20 bg-slate-200 rounded-lg flex items-center justify-center text-[10px] text-slate-500 flex-shrink-0">ไม่มีรูป</div>`}
+            <div class="space-y-1">
+              <span class="font-bold text-[#0b2545] text-sm">${idx + 1}. ${act.title}</span>
+              <p class="text-slate-600 leading-relaxed">${act.desc}</p>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
     }
 
     function fillDemoData() {
@@ -227,16 +339,21 @@
         plan: "วิทยาศาสตร์ - คณิตศาสตร์",
         gpax: "3.92",
         target: "คณะวิศวกรรมคอมพิวเตอร์",
+        coverImg: "",
         sop: "มีความหลงใหลในการพัฒนาซอฟต์แวร์และปัญญาประดิษฐ์ เคยเข้าร่วมแข่งขันเขียนโปรแกรมระดับภาค และต้องการศึกษาต่อเพื่อเป็นวิศวกรซอฟต์แวร์มืออาชีพ",
-        activities: "ชนะเลิศการแข่งขันโครงงานคอมพิวเตอร์ระดับเขตพื้นที่การศึกษา และเป็นประธานชมรมคอมพิวเตอร์"
+        activities: [
+          { title: "ชนะเลิศการแข่งขันโครงงานคอมพิวเตอร์ระดับเขต", desc: "พัฒนาเว็บแอปพลิเคชันช่วยเหลือชุมชน ได้รับรางวัลเหรียญทอง", img: "" },
+          { title: "ประธานชมรมคอมพิวเตอร์ โรงเรียนนาหมื่นพิทยาคม", desc: "จัดกิจกรรมอบรมการเขียนโปรแกรมเบื้องต้นให้น้องๆ ม.ต้น", img: "" }
+        ]
       };
       switchTab('profile');
       syncData();
-      alert("กรอกข้อมูลตัวอย่างแบบฟอร์ม TCAS เรียบร้อยแล้ว!");
+      alert("กรอกข้อมูลตัวอย่างพร้อมกิจกรรมเรียบร้อยแล้ว!");
     }
 
-    // เริ่มต้นแสดงหน้า Profile
+    // เริ่มต้นหน้าแรก
     switchTab('profile');
+    syncData();
   </script>
 </body>
 </html>
